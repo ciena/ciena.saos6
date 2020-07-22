@@ -1,0 +1,8 @@
+---
+requires_ansible: '>=2.9.10,<2.11'
+plugin_routing:
+  action:
+    saos6_command:
+      redirect: ciena.saos6.saos6
+    saos6_facts:
+      redirect: ciena.saos6.saos6

@@ -36,9 +36,7 @@ class LegacyFactsBase(object):
 
 class Default(LegacyFactsBase):
 
-    COMMANDS = [
-        "chassis show device-id",
-    ]
+    COMMANDS = ["chassis show device-id"]
 
     def populate(self):
         super(Default, self).populate()
@@ -72,9 +70,7 @@ class Default(LegacyFactsBase):
 
 class Config(LegacyFactsBase):
 
-    COMMANDS = [
-        "conf show brief",
-    ]
+    COMMANDS = ["conf show brief"]
 
     def populate(self):
         super(Config, self).populate()

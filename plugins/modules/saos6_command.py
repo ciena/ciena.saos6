@@ -20,19 +20,19 @@ from __future__ import absolute_import, division, print_function
 __metaclass__ = type
 DOCUMENTATION = """
 module: ios_command
-author: Peter Sprygada (@privateip)
-short_description: Run commands on remote devices running Cisco IOS
+author: Jeff Groom
+short_description: Run commands on remote devices running Ciena SAOS 6
 description:
 - Sends arbitrary commands to an ios node and returns the results read from the device.
   This module includes an argument that will cause the module to wait for a specific
   condition before returning or timing out if the condition is not met.
 - This module does not support running commands in configuration mode. Please use
-  M(ios_config) to configure IOS devices.
+  M(saos6_config) to configure SAOS devices.
 version_added: 1.0.0
 extends_documentation_fragment:
-- cisco.ios.ios
+- ciena.saos6.saos6
 notes:
-- Tested against IOS 15.6
+- Tested against SAOS 6-20
 options:
   commands:
     description:
@@ -75,23 +75,23 @@ options:
     default: 1
 """
 EXAMPLES = """
-- name: run show version on remote devices
-  cisco.ios.ios_command:
-    commands: show version
+- name: run software show on remote devices
+  ciena.saos6.saos6_command:
+    commands: software show
 
-- name: run show version and check to see if output contains IOS
-  cisco.ios.ios_command:
-    commands: show version
+- name: run software show and check to see if output contains IOS
+  ciena.saos6.saos6_command:
+    commands: software show
     wait_for: result[0] contains IOS
 
 - name: run multiple commands on remote nodes
-  cisco.ios.ios_command:
+  ciena.saos6.saos6_command:
     commands:
-    - show version
+    - software show
     - show interfaces
 
 - name: run multiple commands and evaluate the output
-  cisco.ios.ios_command:
+  ciena.saos6.saos6_command:
     commands:
     - show version
     - show interfaces
@@ -100,7 +100,7 @@ EXAMPLES = """
     - result[1] contains Loopback0
 
 - name: run commands that require answering a prompt
-  cisco.ios.ios_command:
+  ciena.saos6.saos6_command:
     commands:
     - command: clear counters GigabitEthernet0/1
       prompt: Clear "show interface" counters on this interface [confirm]

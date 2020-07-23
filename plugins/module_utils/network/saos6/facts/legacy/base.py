@@ -46,11 +46,6 @@ class Default(LegacyFactsBase):
         self.facts["serialnum"] = self.parse_serialnum(data)
         self.facts.update(self.platform_facts())
 
-    # def populate(self):
-    #     super(Default, self).populate()
-    #     self.facts["serialnum"] = "111"
-    #     self.facts.update(self.platform_facts())
-
     def parse_serialnum(self, data):
         match = re.search(r"\| Serial Number +\| +(\S+)", data)
         if match:
@@ -83,62 +78,4 @@ class Config(LegacyFactsBase):
 
     def populate(self):
         super(Config, self).populate()
-
         self.facts["config"] = self.responses[0]
-
-
-class Neighbors(LegacyFactsBase):
-
-    COMMANDS = [
-        "lldp show neighbors",
-    ]
-
-    def populate(self):
-        super(Neighbors, self).populate()
-        self.facts["neighbors"] = {}
-
-        # all_neighbors = self.responses[0]
-        # if "LLDP not configured" not in all_neighbors:
-        #     neighbors = self.parse(self.responses[1])
-        #     self.facts["neighbors"] = self.parse_neighbors(neighbors)
-
-    def parse(self, data):
-        parsed = list()
-        values = None
-        for line in data.split("\n"):
-            if not line:
-                continue
-            elif line[0] == " ":
-                values += "\n%s" % line
-            elif line.startswith("Interface"):
-                if values:
-                    parsed.append(values)
-                values = line
-        if values:
-            parsed.append(values)
-        return parsed
-
-    def parse_neighbors(self, data):
-        facts = dict()
-        for item in data:
-            interface = self.parse_interface(item)
-            host = self.parse_host(item)
-            port = self.parse_port(item)
-            if interface not in facts:
-                facts[interface] = list()
-            facts[interface].append(dict(host=host, port=port))
-        return facts
-
-    def parse_interface(self, data):
-        match = re.search(r"^Interface:\s+(\S+),", data)
-        return match.group(1)
-
-    def parse_host(self, data):
-        match = re.search(r"SysName:\s+(.+)$", data, re.M)
-        if match:
-            return match.group(1)
-
-    def parse_port(self, data):
-        match = re.search(r"PortDescr:\s+(.+)$", data, re.M)
-        if match:
-            return match.group(1)

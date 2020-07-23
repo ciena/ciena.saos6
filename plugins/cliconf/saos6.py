@@ -15,7 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 DOCUMENTATION = """
@@ -35,33 +36,34 @@ from itertools import chain
 from ansible.errors import AnsibleConnectionFailure
 from ansible.module_utils.common._collections_compat import Mapping
 from ansible.module_utils._text import to_text
-from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import to_list
+from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.utils import (
+    to_list,
+)
 from ansible.plugins.cliconf import CliconfBase
 
 
 class Cliconf(CliconfBase):
-
     def get_device_info(self):
         device_info = {}
-        device_info['network_os'] = 'ciena.saos6.saos6'
-        reply = self.get('software show')
-        data = to_text(reply, errors='surrogate_or_strict').strip()
+        device_info["network_os"] = "ciena.saos6.saos6"
+        reply = self.get("software show")
+        data = to_text(reply, errors="surrogate_or_strict").strip()
 
-        match = re.search(r'Running Package +\: (\S+)', data)
+        match = re.search(r"Running Package +\: (\S+)", data)
         if match:
-            device_info['network_os_version'] = match.group(1).strip(',')
+            device_info["network_os_version"] = match.group(1).strip(",")
 
-        reply = self.get('chassis show capabilities')
-        data = to_text(reply, errors='surrogate_or_strict').strip()
+        reply = self.get("chassis show capabilities")
+        data = to_text(reply, errors="surrogate_or_strict").strip()
 
-        model_search = re.search(r'Platform Name + \| (\S+)', data)
+        model_search = re.search(r"Platform Name + \| (\S+)", data)
         if model_search:
-            device_info['network_os_model'] = model_search.group(1)
+            device_info["network_os_model"] = model_search.group(1)
 
         return device_info
 
-    def get_config(self, source='running', format='text', flags=None):
-        cmd = 'conf sh brief'
+    def get_config(self, source="running", format="text", flags=None):
+        cmd = "conf sh brief"
         out = self.send_command(cmd)
         return out
 

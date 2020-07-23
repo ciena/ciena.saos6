@@ -1,4 +1,5 @@
-# (c) 2020 Red Hat Inc.
+#
+# (c) 2016 Red Hat Inc.
 #
 # This file is part of Ansible
 #
@@ -15,7 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 #
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
+
 __metaclass__ = type
 
 import re
@@ -28,25 +30,29 @@ display = Display()
 
 
 class TerminalModule(TerminalBase):
+
     terminal_stdout_re = [
-        re.compile(br"[\w\+\-\.:\/\[\]]+(?:\([^\)]+\)){0,3}[*]?> ")
+        re.compile(br"[\w\+\-\.:\/\[\]]+(?:\([^\)]+\)){0,3}[*]?> "),
+        re.compile(br"\@[\w\-\.]+:\S+?[>#\$] ?$"),
     ]
 
     terminal_stderr_re = [
         re.compile(br"SHELL PARSER FAILURE"),
+        re.compile(br"ERROR\:"),
     ]
 
     terminal_inital_prompt_newline = False
 
     def on_open_shell(self):
         try:
-            self._exec_cli_command(b"system shell session set more off")
+            commands = [
+                b"system shell session set more off",
+                b"system shell session set window-width 512",
+            ]
+            for cmd in commands:
+                self._exec_cli_command(cmd)
         except AnsibleConnectionFailure:
-            raise AnsibleConnectionFailure("unable to set terminal parameters")
-
-        try:
-            self._exec_cli_command(b"system shell session set window-width 512")
-        except AnsibleConnectionFailure:
-            display.display(
+            display.warning(
                 "WARNING: Unable to set terminal width, command responses may be truncated"
             )
+            raise AnsibleConnectionFailure("unable to set terminal parameters")

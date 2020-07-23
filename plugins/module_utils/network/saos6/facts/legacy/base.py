@@ -87,9 +87,7 @@ class Config(FactsBase):
 
 class Interfaces(FactsBase):
 
-    COMMANDS = [
-        "port show",
-    ]
+    COMMANDS = ["port show"]
 
     def populate(self):
         super(Interfaces, self).populate()
@@ -97,10 +95,7 @@ class Interfaces(FactsBase):
 
 class Neighbors(FactsBase):
 
-    COMMANDS = [
-        "lldp show configuration",
-        "lldp show neighbors",
-    ]
+    COMMANDS = ["lldp show configuration", "lldp show neighbors"]
 
     def populate(self):
         super(Neighbors, self).populate()

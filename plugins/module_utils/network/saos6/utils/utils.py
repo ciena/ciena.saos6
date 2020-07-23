@@ -24,7 +24,9 @@ except ImportError:
 
 def parse_cli_textfsm(value, template):
     if not HAS_TEXTFSM:
-        raise AnsibleError("parse_cli_textfsm filter requires TextFSM library to be installed")
+        raise AnsibleError(
+            "parse_cli_textfsm filter requires TextFSM library to be installed"
+        )
 
     if not isinstance(value, string_types):
         raise AnsibleError(
@@ -32,7 +34,7 @@ def parse_cli_textfsm(value, template):
             % (type(value))
         )
 
-    temp = template.decode('utf-8')
+    temp = template.decode("utf-8")
 
     re_table = textfsm.TextFSM(io.StringIO(temp))
     fsm_results = re_table.ParseText(value)

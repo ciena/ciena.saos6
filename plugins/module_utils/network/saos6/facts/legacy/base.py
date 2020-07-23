@@ -18,9 +18,12 @@ from ansible_collections.ciena.saos6.plugins.module_utils.network.saos6.saos6 im
     run_commands,
     get_capabilities,
 )
+from ansible_collections.ciena.saos6.plugins.module_utils.network.saos6.utils.utils import (
+    parse_cli_textfsm,
+)
 
 
-class LegacyFactsBase(object):
+class FactsBase(object):
 
     COMMANDS = frozenset()
 
@@ -31,10 +34,15 @@ class LegacyFactsBase(object):
         self.responses = None
 
     def populate(self):
-        self.responses = run_commands(self.module, list(self.COMMANDS))
+        self.responses = run_commands(
+            self.module, commands=self.COMMANDS, check_rc=False
+        )
+
+    def run(self, cmd):
+        return run_commands(self.module, commands=cmd, check_rc=False)
 
 
-class Default(LegacyFactsBase):
+class Default(FactsBase):
 
     COMMANDS = ["chassis show device-id"]
 
@@ -68,10 +76,58 @@ class Default(LegacyFactsBase):
         return platform_facts
 
 
-class Config(LegacyFactsBase):
+class Config(FactsBase):
 
     COMMANDS = ["conf show brief"]
 
     def populate(self):
         super(Config, self).populate()
         self.facts["config"] = self.responses[0]
+
+
+class Interfaces(FactsBase):
+
+    COMMANDS = [
+        "port show",
+    ]
+
+    def populate(self):
+        super(Interfaces, self).populate()
+
+
+class Neighbors(FactsBase):
+
+    COMMANDS = [
+        "lldp show configuration",
+        "lldp show neighbors",
+    ]
+
+    def populate(self):
+        super(Neighbors, self).populate()
+
+        fsm = """#
+Value localPort (\S+)
+Value remotePort (\S+)
+Value chassisId (\S+)
+Value mgmtAddr (\S+)
+Value systemName (\S+)
+Value systemDesc (.+)
+
+Start
+  ^\|Port +\|Port -> PortTable
+
+PortTable
+  ^\+[-]+ -> Entrypoint
+
+Entrypoint
+  ^\|${localPort} +\|${remotePort}.*Chassis Id\: ${chassisId}
+  ^\| +\| +\| +Mgmt Addr\: ${mgmtAddr}
+  ^\| +\| +\| +System Name\: ${systemName}
+  ^\| +\| +\| +System Desc\: ${systemDesc}  +\|
+  ^\+[-]+ -> Record
+"""
+
+        lldp_config = self.responses[0]
+        if "Enable" in lldp_config:
+            neighbors = parse_cli_textfsm(self.responses[1], fsm)
+            self.facts["neighbors"] = neighbors

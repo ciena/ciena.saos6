@@ -19,11 +19,11 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 DOCUMENTATION = """
-module: ios_command
+module: saos6_command
 author: Jeff Groom
 short_description: Run commands on remote devices running Ciena SAOS 6
 description:
-- Sends arbitrary commands to an ios node and returns the results read from the device.
+- Sends arbitrary commands to a saos node and returns the results read from the device.
   This module includes an argument that will cause the module to wait for a specific
   condition before returning or timing out if the condition is not met.
 - This module does not support running commands in configuration mode. Please use
@@ -36,7 +36,7 @@ notes:
 options:
   commands:
     description:
-    - List of commands to send to the remote ios device over the configured provider.
+    - List of commands to send to the remote saos device over the configured provider.
       The resulting output from the command is returned. If the I(wait_for) argument
       is provided, the module is not returned until the condition is satisfied or
       the number of retries has expired. If a command sent to the device requires
@@ -79,25 +79,25 @@ EXAMPLES = """
   ciena.saos6.saos6_command:
     commands: software show
 
-- name: run software show and check to see if output contains IOS
+- name: run software show and check to see if output contains Installed
   ciena.saos6.saos6_command:
     commands: software show
-    wait_for: result[0] contains IOS
+    wait_for: result[0] contains Installed
 
 - name: run multiple commands on remote nodes
   ciena.saos6.saos6_command:
     commands:
     - software show
-    - show interfaces
+    - port show
 
 - name: run multiple commands and evaluate the output
   ciena.saos6.saos6_command:
     commands:
-    - show version
-    - show interfaces
+    - software show
+    - port show
     wait_for:
-    - result[0] contains IOS
-    - result[1] contains Loopback0
+    - result[0] contains Installed
+    - result[1] contains Port
 
 - name: run commands that require answering a prompt
   ciena.saos6.saos6_command:

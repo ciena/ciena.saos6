@@ -16,11 +16,14 @@ from ansible_collections.ansible.netcommon.plugins.module_utils.network.common.f
 from ansible_collections.ciena.saos6.plugins.module_utils.network.saos6.facts.legacy.base import (
     Default,
     Neighbors,
+    Interfaces,
     Config,
 )
 
 
-FACT_LEGACY_SUBSETS = dict(default=Default, neighbors=Neighbors, config=Config)
+FACT_LEGACY_SUBSETS = dict(
+    default=Default, neighbors=Neighbors, config=Config, interfaces=Interfaces
+)
 
 
 class Facts(FactsBase):

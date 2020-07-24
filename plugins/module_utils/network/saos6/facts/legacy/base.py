@@ -87,10 +87,68 @@ class Config(FactsBase):
 
 class Interfaces(FactsBase):
 
-    COMMANDS = ["port show"]
+    COMMANDS = ["port show status"]
 
     def populate(self):
         super(Interfaces, self).populate()
+
+        fsm = """#
+Value port (\S+)
+Value macAddress (\S+)
+Value LinkStateAdmin (\S+)
+Value LinkStateOper (\S+)
+Value pvid (\S+)
+Value mode (\S+)
+Value speed (\S+)
+Value duplex (\S+)
+Value flow_ctrl (\S+)
+Value auto_neg (\S+)
+Value untagged_data_vid (\S+)
+Value fixed_rcos (\S+)
+Value fixed_rcolor (\S+)
+Value acceptable_frame_type (\S+)
+Value egress_untag_vlan (\S+)
+Value max_frame_size (\S+)
+Value untagged_data_vs (\S+)
+Value untagged_ctrl_vs (\S+)
+Value resolved_cos_policy (\S+)
+Value ingress_to_egress_qmap (\S+)
+Value resolved_cos_map (\S+)
+Value frame_cos_map (\S+)
+
+Start
+  ^.*PORT ${port} INFO.*
+  ^\| *MAC Address *\| ${macAddress}
+  ^\| *Link State *\| *${LinkStateAdmin} *\| ${LinkStateOper} *\|
+  ^\| *Mode   *\| ${mode}
+  ^\| *Speed   *\| ${speed}
+  ^\| *Duplex   *\| ${duplex}
+  ^\| *Flow Control   *\| ${flow_ctrl}
+  ^\| *Auto Negotiation   *\| ${auto_neg}
+  ^\| *PVID *\| ${pvid}
+  ^\| *Untag Ingress Data Vid *\| ${untagged_data_vid}
+  ^\| *Fixed Resolved CoS *\| ${fixed_rcos}
+  ^\| *Fixed Resolved Color *\| ${fixed_rcolor}
+  ^\| *Acceptable Frame Type *\| ${acceptable_frame_type}
+  ^\| *Egress Untag VLAN *\| ${egress_untag_vlan}
+  ^\| *Max Frame Size *\| ${max_frame_size}
+  ^\| *Untagged Data VS *\| ${untagged_data_vs}
+  ^\| *Untagged Ctrl VS *\| ${untagged_ctrl_vs}
+  ^\| *Resolved CoS Policy *\| ${resolved_cos_policy}
+  ^\| *Ingress to Egress QMap *\| ${ingress_to_egress_qmap}
+  ^\| *Ingress FCOS->RCOS Map *\| ${resolved_cos_map}
+  ^\| *Egress RCOS->FCOS Map *\| ${frame_cos_map} -> Record
+
+EOF
+"""
+        interfaces = []
+        ports = re.findall(r"^\|(\S+)", self.responses[0], re.M)
+        for port in ports:
+            command = "port show port %s" % port
+            port_response = self.run([command])
+            interface = parse_cli_textfsm(port_response[0], fsm)
+            interfaces.append(interface[0])
+        self.facts["interfaces"] = interfaces
 
 
 class Neighbors(FactsBase):

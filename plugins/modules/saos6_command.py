@@ -26,8 +26,6 @@ description:
 - Sends arbitrary commands to a saos node and returns the results read from the device.
   This module includes an argument that will cause the module to wait for a specific
   condition before returning or timing out if the condition is not met.
-- This module does not support running commands in configuration mode. Please use
-  M(saos6_config) to configure SAOS devices.
 version_added: 1.0.0
 extends_documentation_fragment:
 - ciena.saos6.saos6

@@ -4,8 +4,16 @@ Ciena SAOS 6 Collection Release Notes
 
 .. contents:: Topics
 
+v1.0.1
+======
 
-v0.0.1
+Fix
+~~~~~~~
+
+- W605 flake8 parsing 
+
+
+v1.0.0
 ======
 
 New Plugins

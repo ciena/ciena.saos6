@@ -92,7 +92,7 @@ class Interfaces(FactsBase):
     def populate(self):
         super(Interfaces, self).populate()
 
-        fsm = """#
+        fsm = r"""#
 Value port (\S+)
 Value macAddress (\S+)
 Value LinkStateAdmin (\S+)
@@ -158,7 +158,7 @@ class Neighbors(FactsBase):
     def populate(self):
         super(Neighbors, self).populate()
 
-        fsm = """#
+        fsm = r"""#
 Value localPort (\S+)
 Value remotePort (\S+)
 Value chassisId (\S+)

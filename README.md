@@ -22,16 +22,12 @@ The Ciena SAOS 6 collection supports ``network_cli``  connections.
 ## Included content
 
 <!--start collection content-->
-### Cliconf plugins
-Name | Description
---- | ---
-[ciena.saos6.saos6](https://github.com/ciena/ciena.saos6/blob/main/docs/ciena.saos6.saos6_cliconf.rst)|Use saos cliconf to run command on Ciena SAOS 6 platform
 
 ### Modules
 Name | Description
 --- | ---
-[ciena.saos6.saos6_command](https://github.com/ciena/ciena.saos6/blob/main/docs/ciena.saos6.saos6_command_module.rst)|Run commands on remote devices running Ciena SAOS 6
-[ciena.saos6.saos6_facts](https://github.com/ciena/ciena.saos6/blob/main/docs/ciena.saos6.saos6_facts_module.rst)|Collect facts from remote devices running Ciena SAOS 6
+[ciena.saos6.saos6_command](https://github.com/ciena/ciena.saos6/blob/main/docs/saos6_command.md)|Run commands on remote devices running Ciena SAOS 6
+[ciena.saos6.saos6_facts](https://github.com/ciena/ciena.saos6/blob/main/docs/saos6_facts.md)|Collect facts from remote devices running Ciena SAOS 6
 
 <!--end collection content-->
 ## Installing this collection

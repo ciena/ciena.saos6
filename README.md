@@ -87,6 +87,4 @@ We welcome community contributions to this collection. If you find problems, ple
 
 ## Licensing
 
-Apache License Version 2.0
-
 See [LICENSE](LICENSE) to see the full text.

@@ -4,6 +4,11 @@ Ciena SAOS 6 Collection Release Notes
 
 .. contents:: Topics
 
+v1.0.4
+======
+
+No changes
+
 v1.0.3
 ======
 

@@ -4,6 +4,7 @@ extends: default
 ignore: |
   .tox
   changelogs/*
+  .github
 
 rules:
   braces:

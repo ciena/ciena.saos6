@@ -22,8 +22,6 @@ description:
 version_added: 1.0.0
 author:
 - Jeff Groom
-extends_documentation_fragment:
-- ciena.saos6.saos6
 notes:
 - Tested against SAOS 6-20.
 options:
@@ -41,36 +39,29 @@ options:
       Possible values for this argument include all and the resources like interfaces.
       Can specify a list of values to include a larger subset. Values can also be
       used with an initial C(M(!)) to specify that a specific subset should not be
-      collected. Valid subsets are 'all', 'interfaces', 'l3_interfaces', 'lag_interfaces',
-      'lldp_global', 'lldp_interfaces', 'static_routes', 'firewall_rules', 'firewall_global',
-      'firewall_interfaces', 'ospfv3', 'ospfv2'.
+      collected. Valid subsets are 'all', 'interfaces', 'neighbors'
     required: false
 """
 
 EXAMPLES = """
-# Gather all facts
-- ciena.saos6.saos6_facts:
+- name: Gather all facts
+  ciena.saos6.saos6_facts:
     gather_subset: all
     gather_network_resources: all
 
-# collect only the config and default facts
-- ciena.saos6.saos6_facts:
+- name: collect config and default facts
+  ciena.saos6.saos6_facts:
     gather_subset: config
 
-# collect everything exception the config
-- ciena.saos6.saos6_facts:
+- name: collect everything exception the config
+  ciena.saos6.saos6_facts:
     gather_subset: '!config'
-
 """
 
 RETURN = """
 ansible_net_config:
   description: The running-config from the device
   returned: when config is configured
-  type: str
-ansible_net_hostname:
-  description: The configured system hostname
-  returned: always
   type: str
 ansible_net_model:
   description: The device model string

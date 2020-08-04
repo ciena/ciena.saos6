@@ -41,7 +41,7 @@ class TerminalModule(TerminalBase):
         re.compile(br"ERROR\:"),
     ]
 
-    terminal_inital_prompt_newline = False
+    terminal_initial_prompt_newline = False
 
     def on_open_shell(self):
         try:

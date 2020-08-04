@@ -69,6 +69,8 @@ The following example task replaces configuration changes in the existing config
 
 We welcome community contributions to this collection. If you find problems, please open an issue or create a PR against the [Ciena SAOS 6 collection repository](https://github.com/ciena/ciena.saos6).
 
+Release is done automatically use Github Actions as part of merging to master.
+
 ## Changelogs
 
 [CHANGELOG](CHANGELOG.rst)
@@ -88,3 +90,4 @@ We welcome community contributions to this collection. If you find problems, ple
 ## Licensing
 
 See [LICENSE](LICENSE) to see the full text.
+

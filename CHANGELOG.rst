@@ -4,6 +4,11 @@ Ciena SAOS 6 Collection Release Notes
 
 .. contents:: Topics
 
+v1.0.5
+======
+
+* fix utf-8 encoding for python3
+
 v1.0.4
 ======
 

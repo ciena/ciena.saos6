@@ -146,7 +146,9 @@ EOF
         for port in ports:
             command = "port show port %s" % port
             port_response = self.run([command])
-            interface = parse_cli_textfsm(port_response[0], fsm.encode('utf-8'))
+            interface = parse_cli_textfsm(
+                port_response[0], fsm.encode("utf-8")
+            )
             interfaces.append(interface[0])
         self.facts["interfaces"] = interfaces
 
@@ -182,5 +184,7 @@ Entrypoint
 
         lldp_config = self.responses[0]
         if "Enable" in lldp_config:
-            neighbors = parse_cli_textfsm(self.responses[1], fsm.encode('utf-8'))
+            neighbors = parse_cli_textfsm(
+                self.responses[1], fsm.encode("utf-8")
+            )
             self.facts["neighbors"] = neighbors

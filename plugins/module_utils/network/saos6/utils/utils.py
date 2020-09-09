@@ -33,7 +33,7 @@ def parse_cli_textfsm(value, template):
             "parse_cli_textfsm input should be a string, but was given a input of %s"
             % (type(value))
         )
-    if (isinstance(template, str)):
+    if isinstance(template, str):
         temp = template
     else:
         temp = template.decode("utf-8")

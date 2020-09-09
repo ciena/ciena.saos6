@@ -33,8 +33,10 @@ def parse_cli_textfsm(value, template):
             "parse_cli_textfsm input should be a string, but was given a input of %s"
             % (type(value))
         )
-
-    temp = template.decode("utf-8")
+    if (isinstance(template, str)):
+        temp = template
+    else:
+        temp = template.decode("utf-8")
 
     re_table = textfsm.TextFSM(io.StringIO(temp))
     fsm_results = re_table.ParseText(value)

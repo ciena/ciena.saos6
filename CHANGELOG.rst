@@ -4,6 +4,11 @@ Ciena SAOS 6 Collection Release Notes
 
 .. contents:: Topics
 
+v1.0.7
+======
+
+* Python3 support for get_facts
+
 v1.0.6
 ======
 

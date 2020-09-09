@@ -6,6 +6,10 @@ The Ansible Ciena SAOS collection includes a variety of Ansible content to help 
 
 This collection has been tested against Ciena 6.20
 
+## Requirements
+
+* Python 3.6+
+
 <!--start requires_ansible-->
 ## Ansible version compatibility
 

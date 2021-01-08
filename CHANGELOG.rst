@@ -4,6 +4,11 @@ Ciena SAOS 6 Collection Release Notes
 
 .. contents:: Topics
 
+v1.0.10
+======
+
+* fix regex parsing error in python <3.8
+
 v1.0.9
 ======
 

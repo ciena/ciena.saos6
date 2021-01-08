@@ -91,7 +91,7 @@ class Interfaces(FactsBase):
 
     def populate(self):
         super(Interfaces, self).populate()
-        ports = re.findall(r"^\|([0-9.i]+) ?+\|", self.responses[0], re.M)
+        ports = re.findall(r"^\|([0-9.i]+) *\|", self.responses[0], re.M)
 
         fsm = r"""#
 Value port (\S+)

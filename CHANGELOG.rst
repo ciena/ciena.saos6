@@ -4,6 +4,11 @@ Ciena SAOS 6 Collection Release Notes
 
 .. contents:: Topics
 
+v1.0.9
+======
+
+* handle 5150 ports
+
 v1.0.8
 ======
 

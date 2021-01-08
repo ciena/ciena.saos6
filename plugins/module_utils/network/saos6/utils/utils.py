@@ -23,6 +23,11 @@ except ImportError:
 
 
 def parse_cli_textfsm(value, template):
+    if isinstance(value, AnsibleError):
+        raise AnsibleError(
+            "Connection error. Refer to connection logs. This is probably a bug in the saos6 collection%s"
+            % (type(value))
+        )
     if not HAS_TEXTFSM:
         raise AnsibleError(
             "parse_cli_textfsm filter requires TextFSM library to be installed"

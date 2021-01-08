@@ -91,6 +91,7 @@ class Interfaces(FactsBase):
 
     def populate(self):
         super(Interfaces, self).populate()
+        ports = re.findall(r"^\|([0-9.i]+) ?+\|", self.responses[0], re.M)
 
         fsm = r"""#
 Value port (\S+)
@@ -142,7 +143,6 @@ Start
 EOF
 """
         interfaces = []
-        ports = re.findall(r"^\|(\S+)", self.responses[0], re.M)
         for port in ports:
             command = "port show port %s" % port
             port_response = self.run([command])

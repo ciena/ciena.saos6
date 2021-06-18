@@ -34,6 +34,8 @@ class TerminalModule(TerminalBase):
     terminal_stdout_re = [
         re.compile(br"[\w\+\-\.:\/\[\]]+(?:\([^\)]+\)){0,3}[*]?> "),
         re.compile(br"\@[\w\-\.]+:\S+?[>#\$] ?$"),
+        re.compile(br" Enter Password\: "),
+        re.compile(br"Verify Password\: "),
     ]
 
     terminal_stderr_re = [
